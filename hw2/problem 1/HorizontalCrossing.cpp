@@ -91,16 +91,16 @@ int main () {
         yVals[i] = y;
     }
 
-    for (int i = 0; i < (n-1); i++) {
+    for (int i = 0; i < n; i++) {
         pointValue y1{};
         y1.yCoord = yVals[i];
 
         pointValue y2{};
-        y2.yCoord = i == n-2 ? yVals[0] : yVals[i+1];
+        y2.yCoord = i == n-1 ? yVals[0] : yVals[i+1];
 
         const bool y1High = y1.yCoord > y2.yCoord;
-        y1.delta = y1High ? 1 : -1;
-        y2.delta = y1High ? -1 : 1;
+        y1.delta = y1High ? -1 : 1;
+        y2.delta = y1High ? 1 : -1;
 
         pointObjs[2 * i] = y1;
         pointObjs[2 * i + 1] = y2;
@@ -112,12 +112,23 @@ int main () {
 
     int current = 0;
     int best = 0;
+    int pos = 0;
 
     for (int i = minY; i <= maxY; i++) {
-        current += sorted
+        // line on vertex, not counted as intersection
+        for (int j = pos; j < pointSize; j++) {
+            if (sortedPoints[j].yCoord >= i) {
+                break;
+            }
+            current += sortedPoints[j].delta;
+            pos++;
+        }
+        if (current > best) {
+            best = current;
+        }
     }
 
-    cout << n << endl;
+    cout << best << endl;
 
     delete[] yVals;
     delete[] pointObjs;
