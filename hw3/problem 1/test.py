@@ -25,7 +25,7 @@ for input_file in sorted(TEST_DIR.glob("input-*.txt")):
 
     actual = result.stdout.strip()
     expected = answer_file.read_text().strip()
-
+    print("\n")
     if actual == expected:
         print(f"PASS: {input_file.name}")
         passed += 1
