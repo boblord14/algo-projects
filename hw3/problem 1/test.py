@@ -4,7 +4,7 @@ import sys
 
 TEST_DIR = Path("tests")
 
-EXECUTABLE = "../cmake-build-debug/prb1"
+EXECUTABLE = "../../cmake-build-debug/prb1"
 
 passed = 0
 failed = 0
