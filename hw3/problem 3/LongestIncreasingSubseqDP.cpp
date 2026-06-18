@@ -6,6 +6,24 @@
 #include <cmath>
 using namespace std;
 
+int get_longest_subsequence(const vector<int>& array) {
+    vector<int> S(array.size());
+    for (int j = 0; j < array.size(); j++) {
+        S[j] = 1;
+        for (int k = 0; k < j; k++) {
+            if (array[k] < array[j] && S[j] < S[k] + 1) {
+                S[j] = S[k]+1;
+            }
+        }
+    }
+
+    int max_val = 0;
+    for (int val : S) {
+        max_val = max(val, max_val);
+    }
+    return max_val;
+}
+
 int main () {
 
     int n;
@@ -19,7 +37,7 @@ int main () {
         subsequence[i] = x;
     }
 
-    cout << n << endl;
+    cout << get_longest_subsequence(subsequence) << endl;
 
     return 0;
 }
