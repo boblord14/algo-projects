@@ -8,11 +8,13 @@ using namespace std;
 
 int get_longest_subsequence(vector<int> &array, const int index) {
     vector<int> subseqLength(index);
-    for (int i = index-2; i >= 0; i--) {
-        const int val1 = array[index - 1];
-        const int val2 = array[i];
-        if (val2 < val1) {
-            subseqLength [i] = get_longest_subsequence(array, i + 1) + 1;
+    for (int j = index; j >= 0; j--) {
+        for (int i = j-2; i >= 0; i--) {
+            const int val1 = array[j - 1];
+            const int val2 = array[i];
+            if (val2 < val1) {
+                subseqLength [i] = get_longest_subsequence(array, i + 1) + 1;
+            }
         }
     }
     int largestSubseq = 1;
