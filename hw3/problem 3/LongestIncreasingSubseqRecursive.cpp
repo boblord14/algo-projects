@@ -6,24 +6,21 @@
 #include <cmath>
 using namespace std;
 
-int get_longest_subsequence(vector<int> &array, const int index) {
-    vector<int> subseqLength(index);
-    for (int j = index; j >= 0; j--) {
-        for (int i = j-2; i >= 0; i--) {
-            const int val1 = array[j - 1];
-            const int val2 = array[i];
-            if (val2 < val1) {
-                subseqLength [i] = get_longest_subsequence(array, i + 1) + 1;
-            }
+int lisEndingAt(vector<int>& array, int j)
+{
+    if (j == 0) {
+        return 1;
+    }
+
+    int best = 1;
+
+    for (int i = 0; i < j; i++) {
+        if (array[i] < array[j]) {
+            best = max(best,lisEndingAt(array, i) + 1);
         }
     }
-    int largestSubseq = 1;
-    for (const int length : subseqLength) {
-        if (length > largestSubseq) {
-            largestSubseq = length;
-        }
-    }
-    return largestSubseq;
+
+    return best;
 }
 
 int main () {
@@ -39,9 +36,13 @@ int main () {
         subsequence[i] = x;
     }
 
-    const int subSequenceLength = get_longest_subsequence(subsequence, n);
+    int longest = 1;
 
-    cout << subSequenceLength << endl;
+    for (int j = 0; j < subsequence.size(); j++) {
+        longest = max(longest, lisEndingAt(subsequence, j));
+    }
+
+    cout << longest << endl;
 
     return 0;
 }
