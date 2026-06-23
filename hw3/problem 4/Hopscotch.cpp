@@ -35,7 +35,7 @@ int main () {
         squares[i] = x;
     }
 
-    int sum = hopscotch(squares, n);
+    const int sum = hopscotch(squares, n);
 
     cout << sum << endl;
 
